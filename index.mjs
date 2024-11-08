@@ -1,5 +1,11 @@
-const url = "https://aws.amazon.com/";
-
-export const handler = () => {
-    console.log('hoelloooooooo');
-};
+export const handler = async (event) => {
+    const response = {
+        statusCode: 200,
+        headers: {
+            'Content-Type': 'text/plain',
+        },
+        body: 'Hello, this is a simple Lambda API response!',
+    };
+    return response;
+ };
+ 

@@ -1,4 +1,6 @@
 In order to use node modules, you need to make a zip on your local machine and push it up
-## zip -r you_folder_name.zip .
+
+-Make sure you're in bash
+zip -r you_folder_name.zip .
 
 Make sure the name of the base file is index.mjs
