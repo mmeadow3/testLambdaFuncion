@@ -38,6 +38,11 @@ const SECURITY_TOKEN = process.env.SECURITY_TOKEN;
 
 
 export const handler = async (event) => {
+    console.log(event)
+    console.log(event.body);
+    let requestData = JSON.parse(event.body);
+    console.log(requestData.name);
+
     try {
         // Step 1: Obtain Salesforce Access Token using OAuth 2.0
         const authRequestData = new URLSearchParams({
@@ -67,8 +72,10 @@ export const handler = async (event) => {
 
         // Step 2: Make a POST request to create a new Account in Salesforce
         const accountData = {
-            Name: 'New Account from Lambda',
-            Type: 'Prospect',
+            Name: requestData.name,
+            AnnualRevenue: requestData.annualRevenue,
+            NumberOfEmployees : requestData.numberOfEmployees,
+            Type : 'Mikes Big Test'
         };
 
         const createAccountResponse = await axios.post(
