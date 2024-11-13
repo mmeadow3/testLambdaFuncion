@@ -50,44 +50,46 @@ export const handler = async (event) => {
 
         console.log('getting Token!!!! ')
 
-        const test = await axios.post('https://login.salesforce.com/services/oauth2/token', authRequestData, {
+        const response = await axios.post('https://login.salesforce.com/services/oauth2/token', authRequestData, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             }
           })
           
-          console.log(test);
-            console.log('doneeeeee')  /// fuck it, lets try it locally, and if we cant get it with that try postman 
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.access_token);
+
           
-////// Had to add cloudwatch:GenerateQuery to policy
-        // const accessToken = response.data.access_token;
-        // const instanceUrl = response.data.instance_url;
+    ////// Had to add cloudwatch:GenerateQuery to policy in order to view Cloudwatch Logs
+        const accessToken = response.data.access_token;
+        const instanceUrl = response.data.instance_url;
 
-        // // Step 2: Make a POST request to create a new Account in Salesforce
-        // const accountData = {
-        //     Name: 'New Account from Lambda',
-        //     Type: 'Prospect',
-        // };
+        // Step 2: Make a POST request to create a new Account in Salesforce
+        const accountData = {
+            Name: 'New Account from Lambda',
+            Type: 'Prospect',
+        };
 
-        // const createAccountResponse = await axios.post(
-        //     `${instanceUrl}/services/data/v54.0/sobjects/Account/`, 
-        //     accountData,
-        //     {
-        //         headers: {
-        //             Authorization: `Bearer ${accessToken}`,
-        //             'Content-Type': 'application/json',
-        //         },
-        //     }
-        // );
+        const createAccountResponse = await axios.post(
+            `${instanceUrl}/services/data/v54.0/sobjects/Account/`, 
+            accountData,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
 
-        // // Step 3: Return success message
-        // return {
-        //     statusCode: 200,
-        //     body: JSON.stringify({
-        //         message: 'Account created successfully!',
-        //         accountId: createAccountResponse.data.id,
-        //     }),
-        // };
+        // Step 3: Return success message
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'Account created successfully!',
+                accountId: createAccountResponse.data.id,
+            }),
+        };
     } catch (error) {
         // Handle errors
         console.log(error);
