@@ -26,7 +26,7 @@ const { Client } = pg;
 const client = new Client();
 await client.connect();
  
-const res = await client.query('SELECT * FROM pgadmin;');
+const res = await client.query('SELECT * FROM users;');
 console.log(res.rows)
 console.log(res.rows[0]); 
 console.log(res.rows[0].last_name);
