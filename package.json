@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "test ",
   "main": "lambdaFunction1.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.7",
+    "dotenv-defaults": "^5.0.2",
+    "pg": "^8.13.1",
     "qs": "^6.13.0"
   }
 }
